@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CodeHire - Elite Coding Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a3e 50%, #2d1b69 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            background: rgba(15, 15, 35, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            padding: 1rem 2rem;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+        }
+
+        .nav-links a:hover {
+            background: linear-gradient(45deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            transform: translateY(-2px);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .profile-pic {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .main-container {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-section {
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-radius: 20px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            margin-bottom: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            border: 2px solid #6366f1;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .platform-sections {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .section-card {
+            background: rgba(15, 15, 35, 0.6);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .section-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .section-card:hover::before {
+            left: 100%;
+        }
+
+        .section-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(99, 102, 241, 0.4);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #8b5cf6;
+        }
+
+        .coding-interface {
+            background: rgba(15, 15, 35, 0.8);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .interface-header {
+            background: linear-gradient(45deg, #1e293b, #334155);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .problem-selector {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .difficulty-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .difficulty-easy { background: linear-gradient(45deg, #10b981, #34d399); }
+        .difficulty-medium { background: linear-gradient(45deg, #f59e0b, #fbbf24); }
+        .difficulty-hard { background: linear-gradient(45deg, #ef4444, #f87171); }
+
+        .interface-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 600px;
+        }
+
+        .problem-panel {
+            padding: 2rem;
+            border-right: 1px solid rgba(99, 102, 241, 0.2);
+            overflow-y: auto;
+        }
+
+        .code-panel {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .code-editor {
+            flex: 1;
+            background: #0f172a;
+            border: none;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 14px;
+            color: #e2e8f0;
+            resize: none;
+            outline: none;
+        }
+
+        .editor-controls {
+            background: rgba(15, 23, 42, 0.8);
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .language-selector {
+            background: rgba(99, 102, 241, 0.1);
+            border: 1px solid #6366f1;
+            border-radius: 8px;
+            padding: 0.5rem;
+            color: #e2e8f0;
+        }
+
+        .problem-content h3 {
+            color: #8b5cf6;
+            margin-bottom: 1rem;
+        }
+
+        .problem-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .example-box {
+            background: rgba(99, 102, 241, 0.1);
+            border-left: 4px solid #6366f1;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mock-interview {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(6, 182, 212, 0.1));
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .interview-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .feature-item {
+            background: rgba(15, 15, 35, 0.6);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        .leaderboard {
+            background: rgba(15, 15, 35, 0.6);
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .leaderboard-header {
+            background: linear-gradient(45deg, #6366f1, #8b5cf6);
+            padding: 1rem 2rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .leaderboard-item {
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(99, 102, 241, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s ease;
+        }
+
+        .leaderboard-item:hover {
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        .rank {
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(45deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-circle:nth-child(1) {
+            width: 100px;
+            height: 100px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-circle:nth-child(2) {
+            width: 150px;
+            height: 150px;
+            top: 60%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+        .floating-circle:nth-child(3) {
+            width: 80px;
+            height: 80px;
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .contest-banner {
+            background: linear-gradient(45deg, #ec4899, #f97316, #eab308);
+            border-radius: 12px;
+            padding: 1rem 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(236, 72, 153, 0.5); }
+            to { box-shadow: 0 0 30px rgba(236, 72, 153, 0.8); }
+        }
+
+        @media (max-width: 768px) {
+            .platform-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .interface-body {
+                grid-template-columns: 1fr;
+            }
+            
+            .problem-panel {
+                border-right: none;
+                border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+        <div class="floating-circle"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">CodeHire</div>
+        <ul class="nav-links">
+            <li><a href="#" onclick="showSection('problems')">Problems</a></li>
+            <li><a href="#" onclick="showSection('contests')">Contests</a></li>
+            <li><a href="#" onclick="showSection('interview')">Mock Interview</a></li>
+            <li><a href="#" onclick="showSection('leaderboard')">Leaderboard</a></li>
+        </ul>
+        <div class="user-profile">
+            <div class="profile-pic">JD</div>
+            <span>John Doe</span>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <div class="contest-banner" id="contestBanner">
+            🏆 Weekly Coding Contest #47 starts in 2 days! Register now and compete for $5000 prize pool!
+        </div>
+
+        <div class="hero-section" id="heroSection">
+            <div class="hero-content">
+                <h1 class="hero-title">Elite Coding Platform</h1>
+                <p class="hero-subtitle">Master algorithms, ace interviews, and compete with the best developers worldwide</p>
+                <div class="cta-buttons">
+                    <button class="btn btn-primary" onclick="showSection('problems')">Start Coding</button>
+                    <button class="btn btn-secondary" onclick="showSection('interview')">Mock Interview</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number">1,247</div>
+                <div>Problems Solved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">89%</div>
+                <div>Success Rate</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">156</div>
+                <div>Contest Rank</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2,341</div>
+                <div>Rating Points</div>
+            </div>
+        </div>
+
+        <div class="platform-sections">
+            <div class="section-card">
+                <h2 class="section-title">🎯 Competitive Programming</h2>
+                <p>Challenge yourself with 2000+ curated problems ranging from beginner to expert level. Track your progress and compete in weekly contests.</p>
+                <button class="btn btn-primary" style="margin-top: 1rem;" onclick="showSection('problems')">Explore Problems</button>
+            </div>
+            <div class="section-card">
+                <h2 class="section-title">🤖 AI-Powered Mock Interviews</h2>
+                <p>Practice technical interviews with our advanced AI system. Get real-time feedback and improve your problem-solving approach.</p>
+                <button class="btn btn-primary" style="margin-top: 1rem;" onclick="showSection('interview')">Start Interview</button>
+            </div>
+        </div>
+
+        <!-- Coding Interface -->
+        <div class="coding-interface" id="codingInterface">
+            <div class="interface-header">
+                <div class="problem-selector">
+                    <h3>Two Sum</h3>
+                    <span class="difficulty-badge difficulty-easy">Easy</span>
+                </div>
+                <div>
+                    <button class="btn btn-primary" onclick="runCode()">Run Code</button>
+                    <button class="btn btn-secondary" onclick="submitCode()">Submit</button>
+                </div>
+            </div>
+            <div class="interface-body">
+                <div class="problem-panel">
+                    <div class="problem-content">
+                        <h3>Problem Description</h3>
+                        <p>Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to target.</p>
+                        <p>You may assume that each input would have exactly one solution, and you may not use the same element twice.</p>
+                        
+                        <div class="example-box">
+                            <strong>Example 1:</strong><br>
+                            Input: nums = [2,7,11,15], target = 9<br>
+                            Output: [0,1]<br>
+                            Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+                        </div>
+                        
+                        <div class="example-box">
+                            <strong>Example 2:</strong><br>
+                            Input: nums = [3,2,4], target = 6<br>
+                            Output: [1,2]
+                        </div>
+                        
+                        <h3>Constraints:</h3>
+                        <ul>
+                            <li>2 ≤ nums.length ≤ 10⁴</li>
+                            <li>-10⁹ ≤ nums[i] ≤ 10⁹</li>
+                            <li>-10⁹ ≤ target ≤ 10⁹</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="code-panel">
+                    <textarea class="code-editor" placeholder="Write your solution here..." id="codeEditor">class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        # Your code here
+        pass</textarea>
+                    <div class="editor-controls">
+                        <select class="language-selector" id="languageSelector">
+                            <option value="python">Python</option>
+                            <option value="java">Java</option>
+                            <option value="cpp">C++</option>
+                            <option value="javascript">JavaScript</option>
+                        </select>
+                        <div>
+                            <span>Time: 0ms | Memory: 0MB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mock Interview Section -->
+        <div class="mock-interview" id="mockInterview" style="display: none;">
+            <h2 class="section-title">🎤 AI Mock Interview</h2>
+            <p>Experience realistic technical interviews with our AI interviewer. Practice coding, system design, and behavioral questions.</p>
+            
+            <div class="interview-features">
+                <div class="feature-item">
+                    <h4>🎯 Adaptive Difficulty</h4>
+                    <p>Questions adjust based on your performance</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📊 Real-time Feedback</h4>
+                    <p>Get instant insights on your approach</p>
+                </div>
+                <div class="feature-item">
+                    <h4>🎥 Video Recording</h4>
+                    <p>Review your performance later</p>
+                </div>
+                <div class="feature-item">
+                    <h4>📈 Progress Tracking</h4>
+                    <p>Monitor improvement over time</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn btn-primary" onclick="startInterview()">Start Interview Session</button>
+                <button class="btn btn-secondary" onclick="viewPastInterviews()">View Past Sessions</button>
+            </div>
+        </div>
+
+        <!-- Leaderboard Section -->
+        <div class="leaderboard" id="leaderboardSection">
+            <div class="leaderboard-header">
+                🏆 Global Leaderboard
+            </div>
+            <div class="leaderboard-item">
+                <div>
+                    <span class="rank">#1</span>
+                    <strong>AlgorithmMaster</strong>
+                </div>
+                <div>3,847 pts</div>
+            </div>
+            <div class="leaderboard-item">
+                <div>
+                    <span class="rank">#2</span>
+                    <strong>CodeNinja</strong>
+                </div>
+                <div>3,692 pts</div>
+            </div>
+            <div class="leaderboard-item">
+                <div>
+                    <span class="rank">#3</span>
+                    <strong>DataStructureKing</strong>
+                </div>
+                <div>3,541 pts</div>
+            </div>
+            <div class="leaderboard-item">
+                <div>
+                    <span class="rank">#4</span>
+                    <strong>BinarySearcher</strong>
+                </div>
+                <div>3,289 pts</div>
+            </div>
+            <div class="leaderboard-item">
+                <div>
+                    <span class="rank">#5</span>
+                    <strong>GraphExplorer</strong>
+                </div>
+                <div>3,156 pts</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample problems data
+        const problems = [
+            {
+                title: "Two Sum",
+                difficulty: "Easy",
+                description: "Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.",
+                examples: [
+                    {
+                        input: "nums = [2,7,11,15], target = 9",
+                        output: "[0,1]",
+                        explanation: "Because nums[0] + nums[1] == 9, we return [0, 1]."
+                    }
+                ],
+                constraints: ["2 ≤ nums.length ≤ 10⁴", "-10⁹ ≤ nums[i] ≤ 10⁹", "-10⁹ ≤ target ≤ 10⁹"],
+                template: {
+                    python: "class Solution:\n    def twoSum(self, nums: List[int], target: int) -> List[int]:\n        # Your code here\n        pass",
+                    java: "class Solution {\n    public int[] twoSum(int[] nums, int target) {\n        // Your code here\n        return new int[]{};\n    }\n}",
+                    cpp: "class Solution {\npublic:\n    vector<int> twoSum(vector<int>& nums, int target) {\n        // Your code here\n        return {};\n    }\n};",
+                    javascript: "var twoSum = function(nums, target) {\n    // Your code here\n};"
+                }
+            },
+            {
+                title: "Longest Substring Without Repeating Characters",
+                difficulty: "Medium",
+                description: "Given a string s, find the length of the longest substring without repeating characters.",
+                examples: [
+                    {
+                        input: 's = "abcabcbb"',
+                        output: "3",
+                        explanation: 'The answer is "abc", with the length of 3.'
+                    }
+                ],
+                constraints: ["0 ≤ s.length ≤ 5 * 10⁴", "s consists of English letters, digits, symbols and spaces."],
+                template: {
+                    python: "class Solution:\n    def lengthOfLongestSubstring(self, s: str) -> int:\n        # Your code here\n        pass"
+                }
+            },
+            {
+                title: "Median of Two Sorted Arrays",
+                difficulty: "Hard",
+                description: "Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays.",
+                examples: [
+                    {
+                        input: "nums1 = [1,3], nums2 = [2]",
+                        output: "2.00000",
+                        explanation: "merged array = [1,2,3] and median is 2."
+                    }
+                ],
+                constraints: ["nums1.length == m", "nums2.length == n", "0 ≤ m ≤ 1000", "0 ≤ n ≤ 1000"],
+                template: {
+                    python: "class Solution:\n    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:\n        # Your code here\n        pass"
+                }
+            }
+        ];
+
+        let currentProblemIndex = 0;
+
+        function showSection(section) {
+            // Hide all sections
+            document.getElementById('heroSection').style.display = section === 'home' ? 'block' : 'none';
+            document.getElementById('codingInterface').style.display = section === 'problems' ? 'block' : 'none';
+            document.getElementById('mockInterview').style.display = section === 'interview' ? 'block' : 'none';
+            document.getElementById('leaderboardSection').style.display = section === 'leaderboard' ? 'block' : 'none';
+            
+            if (section === 'problems') {
+                loadProblem(currentProblemIndex);
+            }
+        }
+
+        function loadProblem(index) {
+            if (index < 0 || index >= problems.length) return;
+            
+            const problem = problems[index];
+            currentProblemIndex = index;
+            
+            // Update problem title and difficulty
+            const header = document.querySelector('.interface-header');
+            header.innerHTML = `
+                <div class="problem-selector">
+                    <h3>${problem.title}</h3>
+                    <span class="difficulty-badge difficulty-${problem.difficulty.toLowerCase()}">${problem.difficulty}</span>
+                </div>
+                <div>
+                    <button class="btn btn-secondary" onclick="loadProblem(${index - 1})" ${index === 0 ? 'disabled' : ''}>Previous</button>
+                    <button class="btn btn-secondary" onclick="loadProblem(${index + 1})" ${index === problems.length - 1 ? 'disabled' : ''}>Next</button>
+                    <button class="btn btn-primary" onclick="runCode()">Run Code</button>
+                    <button class="btn btn-secondary" onclick="submitCode()">Submit</button>
+                </div>
+            `;
+            
+            // Update problem content
+            const problemPanel = document.querySelector('.problem-panel');
+            let examplesHtml = '';
+            problem.examples.forEach((example, i) => {
+                examplesHtml += `
+                    <div class="example-box">
+                        <strong>Example ${i + 1}:</strong><br>
+                        Input: ${example.input}<br>
